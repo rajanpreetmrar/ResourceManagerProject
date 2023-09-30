@@ -1,0 +1,175 @@
+
+**Hospitals Table:**
+- Report Record Number (Primary Key)
+- Provider CCN
+- Hospital Name
+- Street Address
+- City
+- State Code
+- Zip Code
+- County
+- Medicare CBSA Number
+- Rural Versus Urban
+- CCN Facility Type
+- Provider Type
+- Type of Control
+- Fiscal Year Begin Date
+- Fiscal Year End Date
+
+**Hospital Metrics Table:**
+- Report Record Number (Primary Key, Foreign Key referencing Hospitals)
+- FTE - Employees on Payroll
+- Number of Interns and Residents (FTE)
+- Total Days Title V
+- Total Days Title XVIII
+- Total Days Title XIX
+- Total Days (V + XVIII + XIX + Unknown)
+- Number of Beds
+- Total Bed Days Available
+- Total Discharges Title V
+- Total Discharges Title XVIII
+- Total Discharges Title XIX
+- Total Discharges (V + XVIII + XIX + Unknown)
+- Hospital Total Days Title V For Adults & Peds
+- Hospital Total Days Title XVIII For Adults & Peds
+- Hospital Total Days Title XIX For Adults & Peds
+- Hospital Total Days (V + XVIII + XIX + Unknown) For Adults & Peds
+- Hospital Number of Beds For Adults & Peds
+- Hospital Total Bed Days Available For Adults & Peds
+- Hospital Total Discharges Title V For Adults & Peds
+- Hospital Total Discharges Title XVIII For Adults & Peds
+- Hospital Total Discharges Title XIX For Adults & Peds
+
+**Hospital Financials Table:**
+- Report Record Number (Primary Key, Foreign Key referencing Hospitals)
+- Cost of Charity Care
+- Total Bad Debt Expense
+- Cost of Uncompensated Care
+- Total Unreimbursed and Uncompensated Care
+- Total Salaries From Worksheet A
+- Overhead Non-Salary Costs
+- Depreciation Cost
+- Total Costs
+- Inpatient Total Charges
+- Outpatient Total Charges
+- Combined Outpatient + Inpatient Total Charges
+
+**Hospital Assets Table:**
+- Report Record Number (Primary Key, Foreign Key referencing Hospitals)
+- Cash on Hand and in Banks
+- Temporary Investments
+- Notes Receivable
+- Accounts Receivable
+- Less: Allowances for Uncollectible Notes and Accounts Receivable
+- Inventory
+- Prepaid Expenses
+- Other Current Assets
+- Total Current Assets
+- Land
+- Land Improvements
+- Buildings
+- Leasehold Improvements
+- Fixed Equipment
+- Major Movable Equipment
+- Minor Equipment Depreciable
+- Health Information Technology Designated Assets
+- Total Fixed Assets
+- Investments
+- Other Assets
+- Total Other Assets
+- Total Assets
+
+**Hospital Liabilities Table:**
+- Report Record Number (Primary Key, Foreign Key referencing Hospitals)
+- Accounts Payable
+- Salaries, Wages, and Fees Payable
+- Payroll Taxes Payable
+- Notes and Loans Payable (Short Term)
+- Deferred Income
+- Other Current Liabilities
+- Total Current Liabilities
+- Mortgage Payable
+- Notes Payable
+- Unsecured Loans
+- Other Long Term Liabilities
+- Total Long Term Liabilities
+- Total Liabilities
+- General Fund Balance
+- Total Fund Balances
+- Total Liabilities and Fund Balances
+
+**Hospital Revenues Table:**
+- Report Record Number (Primary Key, Foreign Key referencing Hospitals)
+- DRG Amounts Other Than Outlier Payments
+- DRG amounts before October 1
+- DRG amounts after October 1
+- Outlier payments for discharges
+- Disproportionate Share Adjustment
+- Allowable DSH Percentage
+- Managed Care Simulated Payments
+- Total IME Payment
+- Inpatient Revenue
+- Outpatient Revenue
+- Gross Revenue
+- Less Contractual Allowance and discounts on patients' accounts
+- Net Patient Revenue
+- Total Other Income
+- Total Income
+- Total Other Expenses
+- Net Income
+- Cost To Charge Ratio
+- Net Revenue from Medicaid
+- Medicaid Charges
+- Net Revenue from Stand-Alone SCHIP
+- SCHIP Charges
+- Net Revenue from Medicaid Title XIX Waiver
+- Medicaid Title XIX Waiver Charges
+- Net Revenue from Medicaid Title XXI Waiver
+- Medicaid Title XXI Waiver Charges
+- Net Revenue from Medicaid HMO
+- Medicaid HMO Charges
+- Net Revenue from Medicaid Other Assistance
+- Medicaid Other Assistance Charges
+- Net Revenue from Medicaid State Only
+- Medicaid State Only Charges
+- Net Revenue from Medicaid DSH
+- Medicaid DSH Charges
+- Net Revenue from Other Public Assistance
+- Other Public Assistance Charges
+- Net Revenue from Other Local Indigent Programs
+- Other Local Indigent Programs Charges
+- Net Revenue from Other Public Assistance Adjustment
+- Other Public Assistance Adjustment Charges
+- Net Revenue from Other Public Assistance Title XIX Waiver
+- Other Public Assistance Title XIX Waiver Charges
+- Net Revenue from Other Public Assistance Title XXI Waiver
+- Other Public Assistance Title XXI Waiver Charges
+- Net Revenue from Other Public Assistance State Only
+- Other Public Assistance State Only Charges
+- Net Revenue from Other Public Assistance DSH
+- Other Public Assistance DSH Charges
+- Net Revenue from Medicare
+- Medicare Charges
+- Net Revenue from Other Government
+- Other Government Charges
+- Net Revenue from Commercial Insurance
+- Commercial Insurance Charges
+- Net Revenue from Blue Cross/Blue Shield
+- Blue Cross/Blue Shield Charges
+- Net Revenue from Other Contracts
+- Other Contracts Charges
+- Net Revenue from Workers Compensation
+- Workers Compensation Charges
+- Net Revenue from Self Pay
+- Self Pay Charges
+- Net Revenue from Charity Care
+- Charity Care Charges
+- Net Revenue from Other Unclassified
+- Other Unclassified Charges
+- Net Revenue from Total Charge
+- Total Charge Charges
+- State Law Hospital Charge Ratio
+- The Ration of Hospital Cost to Charges
+- Hospital Charge - 25th Percentile
+- Hospital Charge - Median
+- Hospital Charge - 75th Percentile

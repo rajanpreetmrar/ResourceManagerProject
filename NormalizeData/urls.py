@@ -1,7 +1,7 @@
 from django.urls import path
-from NormalizeData.views import FirstNormalForm
+from NormalizeData.views import RawDataUploadView
 
 urlpatterns = [
-    path('1nf/', FirstNormalForm.as_view(), name='1nf')
+    path('1nf/', RawDataUploadView.as_view(), name='1nf')
 ]
 

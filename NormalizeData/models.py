@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
-from django.db import models
 
 class RawData(models.Model):
     RecordNumber = models.IntegerField()
@@ -15,7 +12,7 @@ class RawData(models.Model):
     County = models.CharField(max_length=255)
     CBSANumber = models.IntegerField()
     RuralUrban = models.CharField(max_length=1)
-    FacilityType = models.IntegerField()
+    FacilityType = models.CharField(max_length=10)
     ProviderType = models.IntegerField()
     ControlType = models.IntegerField()
     FiscalYearBegin = models.DateField()

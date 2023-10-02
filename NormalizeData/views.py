@@ -5,19 +5,14 @@ import pandas as pd
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework import status
-from django.views.decorators.http import require_POST  # Import the decorator
-from .models import RawData  # Import your RawData model
+from .models import RawData, Hospitals
 
-# @require_POST  # Use the decorator to allow only POST requests
+
 class RawDataUploadView(views.APIView):
     def get(self, request):
-        file_path = "H:\ResourceManager\ResourceManagerProject\statics\CostReport_2011_Final.csv"  # Specify the local file path here
-        print("start")
+        file_path = "H:\ResourceManager\ResourceManagerProject\statics\CostReport_2011_Final.csv"
         try:
-            # Read the CSV file using pandas
             df = pd.read_csv(file_path, encoding='utf-8')
-
-            # Define the mapping between Excel column names and Django field names
             column_mapping = {
                 'Report Record Number': 'RecordNumber',
                 'Provider CCN': 'CCN',
@@ -176,9 +171,7 @@ class RawDataUploadView(views.APIView):
                         data_dict[date_column] = convert_date(date_string)
                         print(data_dict[date_column], 'after')
 
-                # print(data_dict)
                 raw_data = RawData(**data_dict)
-                # print(raw_data, "qwerty")
                 raw_data.save()
                 print("saved")
 
@@ -186,3 +179,44 @@ class RawDataUploadView(views.APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class FeedHospitalDataView(views.APIView):
+    def post(self, request):
+        try:
+            raw_data_list = RawData.objects.all()
+
+            for raw_data in raw_data_list:
+                if Hospitals.objects.get(report_record=raw_data.RecordNumber):
+                    print('if')
+                    pass
+                else:
+                    print('else')
+                    hospitals_data = {
+                        "report_record": raw_data.RecordNumber,
+                        "provider_ccn": raw_data.CCN,
+                        "hospital_name": raw_data.HospitalName,
+                        "street_address": raw_data.Address,
+                        "city": raw_data.City,
+                        "state_code": raw_data.StateCode,
+                        "zip_code": raw_data.ZipCode,
+                        "county": raw_data.County,
+                        "medicare_cbsa_number": raw_data.CBSANumber,
+                        "rural_versus_urban": raw_data.RuralUrban,
+                        "ccn_facility_type": raw_data.FacilityType,
+                        "provider_type": raw_data.ProviderType,
+                        "type_of_control": raw_data.ControlType,
+                        "fiscal_year_begin_date": raw_data.FiscalYearBegin,
+                        "fiscal_year_end_date": raw_data.FiscalYearEnd
+                    }
+
+                    Hospitals.objects.create(**hospitals_data)
+
+            return Response({"message": "Data processed and saved to Hospitals model"}, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class FeedHospitalExpensesView(views.APIView):
+    def post(self):

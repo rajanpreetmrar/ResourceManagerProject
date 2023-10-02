@@ -133,3 +133,50 @@ class RawData(models.Model):
         return f"{self.RecordNumber} - {self.HospitalName}"
 
 
+class Hospitals(models.Model):
+    # Primary Key
+    report_record = models.AutoField(primary_key=True)
+
+    # Fields from RawData
+    provider_ccn = models.CharField(max_length=10, unique=True)
+    hospital_name = models.CharField(max_length=255)
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state_code = models.CharField(max_length=2)
+    zip_code = models.CharField(max_length=10)
+    county = models.CharField(max_length=255)
+    medicare_cbsa_number = models.CharField(max_length=10)
+    rural_versus_urban = models.CharField(max_length=50)
+    ccn_facility_type = models.CharField(max_length=255)
+    provider_type = models.CharField(max_length=255)
+    type_of_control = models.CharField(max_length=255)
+    fiscal_year_begin_date = models.DateField()
+    fiscal_year_end_date = models.DateField()
+
+    def __str__(self):
+        return self.hospital_name
+
+    class Meta:
+        verbose_name_plural = "Hospitals"
+
+
+class HospitalExpenses(models.Model):
+    HospitalID = models.OneToOneField(Hospitals, on_delete=models.CASCADE, primary_key=True)
+    HospitalName = models.CharField(max_length=250)
+    CharityCareCost = models.IntegerField()
+    BadDebtExpense = models.IntegerField()
+    UncompasatedCaseCost = models.IntegerField()
+    TotalCost = models.IntegerField()
+    WageRelatedCostsCore = models.IntegerField()
+    WageRelatedCostsRHC_FQHC = models.IntegerField()
+    TotalSalaries = models.IntegerField()
+    ContractLabor = models.IntegerField()
+    WageCostsTeachingPhysicians = models.IntegerField()
+    WageCostInternAndResidents = models.IntegerField()
+    DepreciationCost = models.IntegerField()
+
+    def __str__(self):
+        return self.HospitalName
+
+    class Meta:
+        verbose_name_plural = "HospitalExpenses"

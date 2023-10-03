@@ -180,3 +180,11 @@ class HospitalExpenses(models.Model):
 
     class Meta:
         verbose_name_plural = "HospitalExpenses"
+
+class FacultyData(models.Model):
+    FTEEmployees = models.FloatField()
+    InternsResidents = models.FloatField()
+    ContractLabor = models.FloatField()()
+
+    def __str__(self):
+        return f"{self.facultydata} - {self.HospitalName}"

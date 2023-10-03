@@ -5,7 +5,7 @@ import pandas as pd
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework import status
-from .models import RawData, Hospitals
+from .models import RawData, Hospitals, HospitalExpenses
 
 
 class RawDataUploadView(views.APIView):
@@ -15,7 +15,7 @@ class RawDataUploadView(views.APIView):
             df = pd.read_csv(file_path, encoding='utf-8')
             column_mapping = {
                 'Report Record Number': 'RecordNumber',
-                'Provider CCN': 'CCN',
+                'Provider CCN': 'HospitalID',
                 'Hospital Name': 'HospitalName',
                 'Street Address': 'Address',
                 'City': 'City',
@@ -193,21 +193,21 @@ class FeedHospitalDataView(views.APIView):
                 else:
                     print('else')
                     hospitals_data = {
-                        "report_record": raw_data.RecordNumber,
-                        "provider_ccn": raw_data.CCN,
-                        "hospital_name": raw_data.HospitalName,
-                        "street_address": raw_data.Address,
-                        "city": raw_data.City,
-                        "state_code": raw_data.StateCode,
-                        "zip_code": raw_data.ZipCode,
-                        "county": raw_data.County,
-                        "medicare_cbsa_number": raw_data.CBSANumber,
-                        "rural_versus_urban": raw_data.RuralUrban,
-                        "ccn_facility_type": raw_data.FacilityType,
-                        "provider_type": raw_data.ProviderType,
-                        "type_of_control": raw_data.ControlType,
-                        "fiscal_year_begin_date": raw_data.FiscalYearBegin,
-                        "fiscal_year_end_date": raw_data.FiscalYearEnd
+                        "ReportRecord": raw_data.RecordNumber,
+                        "HospitalID": raw_data.CCN,
+                        "HospitalName": raw_data.HospitalName,
+                        "Address": raw_data.Address,
+                        "City": raw_data.City,
+                        "StateCode": raw_data.StateCode,
+                        "ZipCode": raw_data.ZipCode,
+                        "Country": raw_data.County,
+                        "CBSANumber": raw_data.CBSANumber,
+                        "RuralUrban": raw_data.RuralUrban,
+                        "FacilityType": raw_data.FacilityType,
+                        "ProviderType": raw_data.ProviderType,
+                        "ControlType": raw_data.ControlType,
+                        "FiscalYearBegin": raw_data.FiscalYearBegin,
+                        "FiscalYearEnd": raw_data.FiscalYearEnd
                     }
 
                     Hospitals.objects.create(**hospitals_data)
@@ -217,6 +217,39 @@ class FeedHospitalDataView(views.APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-#
-# class FeedHospitalExpensesView(views.APIView):
-#     def post(self):
+
+class FeedHospitalExpensesView(views.APIView):
+    def post(self, request):
+        try:
+            raw_data_list = RawData.objects.all()
+
+            for raw_data in raw_data_list:
+                if HospitalExpenses.objects.get(HospitalID=raw_data.CCN):
+                    print('if')
+                    pass
+                else:
+                    print('else')
+                    expense_data = {
+                        "HospitalID": raw_data.CCN,
+                        "HospitalName": raw_data.HospitalName,
+                        "CharityCost": raw_data.CharityCost,
+                        "BadDebtExpense": raw_data.BadDebtExpense,
+                        "UncompasatedCost": raw_data.UncompensatedCost,
+                        "TotalCost": raw_data.TotalCost,
+                        "WageRelatedCostsCore": raw_data.WageRelatedCostsCore,
+                        "WageRelatedCostsRHC": raw_data.WageRelatedCostsRHC,
+                        "SalariesPayable": raw_data.SalariesPayable,
+                        "ContractLabor": raw_data.ContractLabor,
+                        "WageCostsTeaching": raw_data.WageRelatedCostsTeaching,
+                        "WageRelatedCostInternResidents": raw_data.WageRelatedCostInternResidents,
+                        "DepreciationCost": raw_data.DepreciationCost
+                    }
+
+                    HospitalExpenses.objects.create(**expense_data)
+
+            return Response({"message": "Data processed and saved to Hospitals Expenses Model"}, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+

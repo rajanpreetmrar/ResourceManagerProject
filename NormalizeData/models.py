@@ -3,13 +3,13 @@ from django.db import models
 
 class RawData(models.Model):
     RecordNumber = models.IntegerField()
-    CCN = models.IntegerField()
+    HospitalID = models.IntegerField()
     HospitalName = models.CharField(max_length=255)
     Address = models.CharField(max_length=255)
     City = models.CharField(max_length=255)
     StateCode = models.CharField(max_length=2)
     ZipCode = models.CharField(max_length=10)
-    County = models.CharField(max_length=255)
+    Country = models.CharField(max_length=255)
     CBSANumber = models.IntegerField()
     RuralUrban = models.CharField(max_length=1)
     FacilityType = models.CharField(max_length=10)
@@ -65,7 +65,7 @@ class RawData(models.Model):
     SalariesAdjusted = models.FloatField()
     ContractLabor = models.FloatField()
     WageRelatedCostsTeaching = models.FloatField()
-    WageRelatedCostsInternsResidents = models.FloatField()
+    WageRelatedCostInternResidents = models.FloatField()
     Cash = models.FloatField()
     TemporaryInvestments = models.FloatField()
     NotesReceivable = models.FloatField()
@@ -138,20 +138,21 @@ class Hospitals(models.Model):
     report_record = models.AutoField(primary_key=True)
 
     # Fields from RawData
-    provider_ccn = models.CharField(max_length=10, unique=True)
-    hospital_name = models.CharField(max_length=255)
-    street_address = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    state_code = models.CharField(max_length=2)
-    zip_code = models.CharField(max_length=10)
-    county = models.CharField(max_length=255)
-    medicare_cbsa_number = models.CharField(max_length=10)
-    rural_versus_urban = models.CharField(max_length=50)
-    ccn_facility_type = models.CharField(max_length=255)
-    provider_type = models.CharField(max_length=255)
-    type_of_control = models.CharField(max_length=255)
-    fiscal_year_begin_date = models.DateField()
-    fiscal_year_end_date = models.DateField()
+    HospitalID = models.CharField(max_length=10, unique=True)
+    HospitalName = models.CharField(max_length=255)
+    Address = models.CharField(max_length=255)
+    City = models.CharField(max_length=255)
+    StateCode = models.CharField(max_length=2)
+    ZipCode = models.CharField(max_length=10)
+    Country = models.CharField(max_length=255)
+    CBSANumber = models.CharField(max_length=10)
+    RuralUrban = models.CharField(max_length=50)
+    FacilityType = models.CharField(max_length=255)
+    ProviderType = models.CharField(max_length=255)
+    ControlType = models.CharField(max_length=255)
+    FiscalYearBegin = models.DateField()
+    FiscalYearEnd = models.DateField()
+
 
     def __str__(self):
         return self.hospital_name
@@ -163,16 +164,16 @@ class Hospitals(models.Model):
 class HospitalExpenses(models.Model):
     HospitalID = models.OneToOneField(Hospitals, on_delete=models.CASCADE, primary_key=True)
     HospitalName = models.CharField(max_length=250)
-    CharityCareCost = models.IntegerField()
+    CharityCost = models.IntegerField()
     BadDebtExpense = models.IntegerField()
-    UncompasatedCaseCost = models.IntegerField()
+    UncompasatedCost = models.IntegerField()
     TotalCost = models.IntegerField()
     WageRelatedCostsCore = models.IntegerField()
-    WageRelatedCostsRHC_FQHC = models.IntegerField()
-    TotalSalaries = models.IntegerField()
+    WageRelatedCostsRHC = models.IntegerField()
+    SalariesPayable = models.IntegerField()
     ContractLabor = models.IntegerField()
-    WageCostsTeachingPhysicians = models.IntegerField()
-    WageCostInternAndResidents = models.IntegerField()
+    WageRelatedCostsTeaching = models.IntegerField()
+    WageRelatedCostInternResidents = models.IntegerField()
     DepreciationCost = models.IntegerField()
 
     def __str__(self):
@@ -180,6 +181,7 @@ class HospitalExpenses(models.Model):
 
     class Meta:
         verbose_name_plural = "HospitalExpenses"
+
 
 class FacultyData(models.Model):
     FTEEmployees = models.FloatField()

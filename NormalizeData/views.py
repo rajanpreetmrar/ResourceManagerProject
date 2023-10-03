@@ -229,7 +229,7 @@ class FeedHospitalExpensesView(views.APIView):
                     pass
                 else:
                     print('else')
-                    hospitals_data = {
+                    expense_data = {
                         "HospitalID": raw_data.CCN,
                         "HospitalName": raw_data.HospitalName,
                         "CharityCost": raw_data.CharityCost,
@@ -245,9 +245,9 @@ class FeedHospitalExpensesView(views.APIView):
                         "DepreciationCost": raw_data.DepreciationCost
                     }
 
-                    Hospitals.objects.create(**hospitals_data)
+                    HospitalExpenses.objects.create(**expense_data)
 
-            return Response({"message": "Data processed and saved to Hospitals model"}, status=status.HTTP_201_CREATED)
+            return Response({"message": "Data processed and saved to Hospitals Expenses Model"}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
